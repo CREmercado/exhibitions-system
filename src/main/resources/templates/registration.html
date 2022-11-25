@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration Form</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container">
+  <div class="wrapper">
+    <div class="title"><h1 th:text="#{registration.title}"></h1></div>
+
+    <form th:action="@{/add-user}" th:object="${user}" method="post">
+
+      <p th:if="${error}" class="error" th:text="${error}"></p>
+      <p th:if="${message}" class="error" th:text="${message}"></p>
+
+      <!-- Nickname input -->
+      <div class="form-outline mb-4">
+        <input type="text" id="formUser" class="form-control" name="nickname" required/>
+        <label class="form-label" for="formUser" th:text="#{registration.user}"></label>
+      </div>
+
+      <!-- First name input -->
+      <div class="form-outline mb-4">
+        <input type="text" id="formFirstName" class="form-control" name="firstName" required/>
+        <label class="form-label" for="formFirstName" th:text="#{registration.first_name}"></label>
+      </div>
+
+      <!-- Last name input -->
+      <div class="form-outline mb-4">
+        <input type="text" id="formLastName" class="form-control" name="lastName" required/>
+        <label class="form-label" for="formLastName" th:text="#{registration.last_name}"></label>
+      </div>
+
+      <!-- Role input -->
+      <div class="form-outline mb-4">
+        <label class="form-label" for="formRole" th:text="#{registration.role}"></label>
+        <select type="text" id="formRole" class="form-control" name="role" required>
+          <option th:text="#{registration.role.administrator}"></option>
+          <option th:text="#{registration.role.authorized_user}"></option>
+          <option th:text="#{registration.role.normal_user}"></option>
+        </select>
+      </div>
+
+
+      <!-- Password input -->
+      <div class="form-outline mb-4">
+        <input type="password" id="formPassword" class="form-control" name="password" required/>
+        <label class="form-label" for="formPassword" th:text="#{registration.password}"></label>
+      </div>
+
+      <!-- Submit button -->
+      <button type="submit" class="btn btn-primary btn-block mb-4" th:text="#{registration.save}"></button>
+
+    </form>
+
+  </div>
+</div>
+
+</body>
+</html>

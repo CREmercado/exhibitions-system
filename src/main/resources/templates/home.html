@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+
+    <h1 th:text="#{home.title}"></h1>
+
+    <form method="POST" th:action="@{/login}">
+        <button type="submit" name="submit" value="value" class="btn btn-primary btn-block mb-4" th:text="#{home.signin}"></button>
+    </form>
+
+
+    <div class="text-center">
+        <p th:text="#{home.member}"></p>
+        <a th:href="@{/registration}" type="button" th:text="#{home.register}"></a>
+    </div>
+
+</body>
+</html>

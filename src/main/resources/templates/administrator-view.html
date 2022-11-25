@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>User View</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+
+<div>
+    <div class="d-flex justify-content-between">
+        <div>
+            <h1 th:text="#{administrator.title}"></h1>
+        </div>
+        <div>
+            <button type="button" class="btn btn-primary" th:text="#{administrator.statistics}"></button>
+            <button type="button" class="btn btn-info"
+                    th:onclick="|window.location.href='/administrator/add-exhibition'|" th:text="#{administrator.add_exhibition}"></button>
+        </div>
+    </div>
+
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col" th:text="#{user_view.theme}"></th>
+                <th scope="col" th:text="#{user_view.start_date}"></th>
+                <th scope="col" th:text="#{user_view.end_date}"></th>
+                <th scope="col" th:text="#{user_view.opening_time}"></th>
+                <th scope="col" th:text="#{user_view.closing_time}"></th>
+                <th scope="col" th:text="#{user_view.halls}"></th>
+                <th scope="col" th:text="#{user_view.ticket_price}"></th>
+                <th scope="col" th:text="#{user_view.status}"></th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="exhibition: ${exhibitions}">
+                <td th:text="${exhibition.theme}"></td>
+                <td th:text="${#temporals.format(exhibition.startDate, 'dd-MM-yyyy')}"></td>
+                <td th:text="${#temporals.format(exhibition.endDate, 'dd-MM-yyyy')}"></td>
+                <td th:text="${#temporals.format(exhibition.openingTime, 'HH:mm a')}"></td>
+                <td th:text="${#temporals.format(exhibition.closingTime, 'HH:mm a')}"></td>
+                <td>
+                    <div th:each="hall: ${exhibition.halls}">
+                        <p th:text="${hall.hallName}"></p>
+                    </div>
+                </td>
+                <td th:text="'$' + ${#numbers.formatDecimal(exhibition.ticketPrice, 0, 'COMMA', 2, 'POINT')}"></td>
+
+                <td th:if="${exhibition.state}">
+                    <form method="POST" th:action="@{/administrator/set-exhibition-state}">
+                        <input type="hidden" name="id" th:value="${exhibition.exhibitionId}" />
+                        <button type="submit" name="submit" value="value" class="btn btn-danger" th:text="#{administrator.cancel}"></button>
+                    </form>
+                </td>
+
+                <td th:if="${!exhibition.state}">
+                    <form method="POST" th:action="@{/administrator/set-exhibition-state}">
+                        <input type="hidden" name="id" th:value="${exhibition.exhibitionId}" />
+                        <button type="submit" name="submit" value="value" class="btn btn-success" th:text="#{administrator.activate}"></button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
